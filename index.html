@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Overlay KML on Google Map</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Overlay KML on Google Map</h1>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" accept=".kml" onchange="handleFile(this.files)">
+    </form>
+    <div id="map"></div>
+
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 2,
+                center: {lat: 0, lng: 0}
+            });
+
+            // Function to handle file upload
+            function handleFile(files) {
+                var file = files[0];
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    var kmlLayer = new google.maps.KmlLayer({
+                        url: event.target.result,
+                        map: map
+                    });
+                };
+
+                reader.readAsDataURL(file);
+            }
+
+            // Function to prevent form submission
+            document.getElementById('uploadForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+            });
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH2_-dsF8idGNNQYdQ6xhdbTyY3Ise9yc&callback=initMap">
+    </script>
+</body>
+</html>
