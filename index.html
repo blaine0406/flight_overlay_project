@@ -19,33 +19,51 @@
     <script>
         function initMap() {
             var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 2,
-                center: {lat: 0, lng: 0}
+                zoom: 10, // Adjust the zoom level as needed
             });
-
+    
             // Function to handle file upload
             function handleFile(files) {
                 var file = files[0];
                 var reader = new FileReader();
-
+    
                 reader.onload = function(event) {
+                    var kmlText = event.target.result;
+                    var parser = new DOMParser();
+                    var xmlDoc = parser.parseFromString(kmlText, "text/xml");
+                    
+                    // Extract coordinates from KML
+                    var coordinates = xmlDoc.getElementsByTagName("coordinates")[0].textContent.trim().split(",");
+                    var lat = parseFloat(coordinates[1]);
+                    var lng = parseFloat(coordinates[0]);
+    
+                    // Set map center
+                    map.setCenter({ lat: lat, lng: lng });
+    
+                    // Display KML layer
                     var kmlLayer = new google.maps.KmlLayer({
-                        url: event.target.result,
+                        url: 'data:text/xml;base64,' + btoa(kmlText),
                         map: map
                     });
                 };
-
+    
                 reader.readAsText(file);
             }
-
+    
             // Function to prevent form submission
             document.getElementById('uploadForm').addEventListener('submit', function(event) {
                 event.preventDefault();
             });
+    
+            // Attach onchange event listener to file input
+            document.getElementById('fileInput').addEventListener('change', function(event) {
+                handleFile(this.files);
+            });
         }
     </script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAH2_-dsF8idGNNQYdQ6xhdbTyY3Ise9yc&callback=initMap">
+    
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key=ENTER_KEY&callback=initMap">
     </script>
 </body>
 </html>
