@@ -1,69 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Overlay KML on Google Map</title>
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone Map Overlay Project</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Overlay KML on Google Map</h1>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" accept=".kml" onchange="handleFile(this.files)">
+    <h1>Drone Map Overlay Project</h1>
+    <form id="UploadForm" enctype="multipart/form-data">
+        <input type="file" id="fileInput" accept=".KLM">
     </form>
     <div id="map"></div>
 
-    <script>
-        function initMap() {
-            var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 10, // Adjust the zoom level as needed
-            });
-    
-            // Function to handle file upload
-            function handleFile(files) {
-                var file = files[0];
-                var reader = new FileReader();
-    
-                reader.onload = function(event) {
-                    var kmlText = event.target.result;
-                    var parser = new DOMParser();
-                    var xmlDoc = parser.parseFromString(kmlText, "text/xml");
-                    
-                    // Extract coordinates from KML
-                    var coordinates = xmlDoc.getElementsByTagName("coordinates")[0].textContent.trim().split(",");
-                    var lat = parseFloat(coordinates[1]);
-                    var lng = parseFloat(coordinates[0]);
-    
-                    // Set map center
-                    map.setCenter({ lat: lat, lng: lng });
-    
-                    // Display KML layer
-                    var kmlLayer = new google.maps.KmlLayer({
-                        url: 'data:text/xml;base64,' + btoa(kmlText),
-                        map: map
-                    });
-                };
-    
-                reader.readAsText(file);
-            }
-    
-            // Function to prevent form submission
-            document.getElementById('uploadForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-            });
-    
-            // Attach onchange event listener to file input
-            document.getElementById('fileInput').addEventListener('change', function(event) {
-                handleFile(this.files);
-            });
-        }
-    </script>
-    
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key=ENTER_KEY&callback=initMap">
-    </script>
+    <script src="script.js"></script>
+    <script src="config.js"></script>
 </body>
 </html>
