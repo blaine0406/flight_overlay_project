@@ -4,19 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Drone Flight Path Viewer</title>
-    <style>
-        #map {
-            height: 400px;
-            width: 100%;
-            margin-bottom: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to styles.css -->
 </head>
 <body>
-    <h1>XAG Flight Path Viewer</h1>
-    <input type="file" id="fileInput" accept=".kml">
-    <div id="map"></div>
+    <div class="container">
+        <h1>XAG Flight Path Viewer</h1>
+        <input type="file" id="fileInput" accept=".kml">
+        <div id="map"></div>
+    </div>
 
+    <!-- Google Maps JavaScript API with your API key -->
     <script src="config.js"></script>
     <script src="script.js"></script>
 </body>

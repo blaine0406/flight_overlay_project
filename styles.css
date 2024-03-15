@@ -1,0 +1,38 @@
+/* styles.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #222; /* Dark background color */
+    color: #fff; /* Light text color */
+    text-align: center; /* Center text horizontally */
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+h1 {
+    color: #fff; /* Light text color */
+}
+
+#map {
+    height: 400px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#fileInput {
+    background-color: #007bff; /* Blue button */
+    color: #fff; /* White text color */
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+#fileInput:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}

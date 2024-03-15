@@ -16,22 +16,25 @@ function initMap() {
             let xmlDoc = parser.parseFromString(kmlData, 'text/xml');
             let coordinates = xmlDoc.querySelectorAll('coordinates')[0].textContent.split(' ');
 
+            // Extracting coordinates from KML data
             let flightPathCoordinates = coordinates.map(function(coord) {
                 let latLng = coord.split(',').map(parseFloat);
-                return { lat: latLng[1], lng: latLng[0] };
+                return { lat: latLng[1], lng: latLng[0] }; // Converting to Google Maps LatLng format
             });
 
+            // Creating a polyline for the flight path
             let flightPath = new google.maps.Polyline({
                 path: flightPathCoordinates,
                 geodesic: true,
-                strokeColor: '#FF0000',
+                strokeColor: '#FF0000', // Red color
                 strokeOpacity: 1.0,
                 strokeWeight: 2
             });
 
+            // Displaying the polyline on the map
             flightPath.setMap(map);
 
-            // Fit map bounds to show the entire flight path
+            // Fitting map bounds to show the entire flight path
             let bounds = new google.maps.LatLngBounds();
             flightPathCoordinates.forEach(function(coord) {
                 bounds.extend(coord);
@@ -39,6 +42,7 @@ function initMap() {
             map.fitBounds(bounds);
         };
 
+        // Reading the uploaded file as text
         reader.readAsText(file);
     });
 }
