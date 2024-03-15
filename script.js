@@ -40,6 +40,24 @@ function initMap() {
                 bounds.extend(coord);
             });
             map.fitBounds(bounds);
+
+            // Adding markers for start and end points
+            let startPoint = flightPathCoordinates[0];
+            let endPoint = flightPathCoordinates[flightPathCoordinates.length - 1];
+
+            new google.maps.Marker({
+                position: startPoint,
+                map: map,
+                title: 'Start Point',
+                icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' // Green marker for start point
+            });
+
+            new google.maps.Marker({
+                position: endPoint,
+                map: map,
+                title: 'End Point',
+                icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' // Red marker for end point
+            });
         };
 
         // Reading the uploaded file as text
