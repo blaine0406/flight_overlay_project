@@ -1,8 +1,7 @@
-// Load API key from configuration file
-fetch('config.json')
-    .then(response => response.json())
-    .then(config => {
-        const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=${config.apiKey}&callback=initMap`;
-        document.head.appendChild(script);
-    });
+// Load API key
+const apiKey = 'AIzaSyCBKcVb7_j-QzBrPh-_9s79kneVyB5Hq6E'; // Replace 'YOUR_API_KEY' with your actual API key
+
+// Dynamically create script tag with API key
+const script = document.createElement('script');
+script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
+document.head.appendChild(script);

@@ -3,17 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drone Map Overlay Project</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Drone Flight Path Viewer</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Drone Map Overlay Project</h1>
-    <form id="UploadForm" enctype="multipart/form-data">
-        <input type="file" id="fileInput" accept=".KLM">
-    </form>
+    <h1>XAG Flight Path Viewer</h1>
+    <input type="file" id="fileInput" accept=".kml">
     <div id="map"></div>
 
-    <script src="script.js"></script>
     <script src="config.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
