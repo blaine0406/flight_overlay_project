@@ -14,50 +14,75 @@ function initMap() {
             let kmlData = event.target.result;
             let parser = new DOMParser();
             let xmlDoc = parser.parseFromString(kmlData, 'text/xml');
+            
+            // Extract flight path coordinates
             let coordinates = xmlDoc.querySelectorAll('coordinates')[0].textContent.split(' ');
-
-            // Extracting coordinates from KML data
             let flightPathCoordinates = coordinates.map(function(coord) {
                 let latLng = coord.split(',').map(parseFloat);
-                return { lat: latLng[1], lng: latLng[0] }; // Converting to Google Maps LatLng format
+                return { lat: latLng[1], lng: latLng[0] };
             });
 
-            // Creating a polyline for the flight path
+            // Extract other details
+            let lengthElement = xmlDoc.querySelector('length');
+            let length = lengthElement ? lengthElement.textContent : 'N/A';
+
+            let aircraftNameElement = xmlDoc.querySelector('aircraft_name');
+            let aircraftName = aircraftNameElement ? aircraftNameElement.textContent : 'N/A';
+
+            let flightControllerIDElement = xmlDoc.querySelector('flight_controller_id');
+            let flightControllerID = flightControllerIDElement ? flightControllerIDElement.textContent : 'N/A';
+
+            let pilotsNameElement = xmlDoc.querySelector('pilots_name');
+            let pilotsName = pilotsNameElement ? pilotsNameElement.textContent : 'N/A';
+
+            let flightTimeElement = xmlDoc.querySelector('flight_time');
+            let flightTime = flightTimeElement ? flightTimeElement.textContent : 'N/A';
+
+            let modeSelectionElement = xmlDoc.querySelector('mode_selection');
+            let modeSelection = modeSelectionElement ? modeSelectionElement.textContent : 'N/A';
+
+            let heightElement = xmlDoc.querySelector('height');
+            let height = heightElement ? heightElement.textContent : 'N/A';
+
+            let routeSpacingElement = xmlDoc.querySelector('route_spacing');
+            let routeSpacing = routeSpacingElement ? routeSpacingElement.textContent : 'N/A';
+
+            let taskFlightSpeedElement = xmlDoc.querySelector('task_flight_speed');
+            let taskFlightSpeed = taskFlightSpeedElement ? taskFlightSpeedElement.textContent : 'N/A';
+
+            let taskAreaElement = xmlDoc.querySelector('task_area');
+            let taskArea = taskAreaElement ? taskAreaElement.textContent : 'N/A';
+
+            let sprayAmountElement = xmlDoc.querySelector('spray_amount');
+            let sprayAmount = sprayAmountElement ? sprayAmountElement.textContent : 'N/A';
+            
+            // Display flight path on the map
+            let map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: flightPathCoordinates[0]
+            });
+            
             let flightPath = new google.maps.Polyline({
                 path: flightPathCoordinates,
                 geodesic: true,
-                strokeColor: '#FF0000', // Red color
+                strokeColor: '#FF0000',
                 strokeOpacity: 1.0,
-                strokeWeight: 2
+                strokeWeight: 2,
+                map: map
             });
 
-            // Displaying the polyline on the map
-            flightPath.setMap(map);
-
-            // Fitting map bounds to show the entire flight path
-            let bounds = new google.maps.LatLngBounds();
-            flightPathCoordinates.forEach(function(coord) {
-                bounds.extend(coord);
-            });
-            map.fitBounds(bounds);
-
-            // Adding markers for start and end points
-            let startPoint = flightPathCoordinates[0];
-            let endPoint = flightPathCoordinates[flightPathCoordinates.length - 1];
-
-            new google.maps.Marker({
-                position: startPoint,
-                map: map,
-                title: 'Start Point',
-                icon: 'https://maps.google.com/mapfiles/ms/icons/green-dot.png' // Green marker for start point
-            });
-
-            new google.maps.Marker({
-                position: endPoint,
-                map: map,
-                title: 'End Point',
-                icon: 'https://maps.google.com/mapfiles/ms/icons/red-dot.png' // Red marker for end point
-            });
+            // Display details on the webpage
+            document.getElementById('length').textContent = `Length: ${length}`;
+            document.getElementById('aircraftName').textContent = `Aircraft Name: ${aircraftName}`;
+            document.getElementById('flightControllerID').textContent = `Flight Controller ID: ${flightControllerID}`;
+            document.getElementById('pilotsName').textContent = `Pilot's Name: ${pilotsName}`;
+            document.getElementById('flightTime').textContent = `Flight Time: ${flightTime}`;
+            document.getElementById('modeSelection').textContent = `Mode Selection: ${modeSelection}`;
+            document.getElementById('height').textContent = `Height: ${height}`;
+            document.getElementById('routeSpacing').textContent = `Route Spacing: ${routeSpacing}`;
+            document.getElementById('taskFlightSpeed').textContent = `Task Flight Speed: ${taskFlightSpeed}`;
+            document.getElementById('taskArea').textContent = `Task Area: ${taskArea}`;
+            document.getElementById('sprayAmount').textContent = `Spray Amount: ${sprayAmount}`;
         };
 
         // Reading the uploaded file as text

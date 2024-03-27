@@ -1,12 +1,7 @@
-/* styles.css */
-
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #222; /* Dark background color */
-    color: #fff; /* Light text color */
-    text-align: center; /* Center text horizontally */
 }
 
 .container {
@@ -16,7 +11,7 @@ body {
 }
 
 h1 {
-    color: #fff; /* Light text color */
+    text-align: center;
 }
 
 #map {
@@ -25,14 +20,12 @@ h1 {
     margin-bottom: 20px;
 }
 
-#fileInput {
-    background-color: #007bff; /* Blue button */
-    color: #fff; /* White text color */
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
+#details {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
 }
 
-#fileInput:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+#details p {
+    margin: 5px 0;
 }
